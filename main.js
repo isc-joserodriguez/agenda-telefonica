@@ -10,7 +10,7 @@ const guardarLocalStorage = (datos) => {
 };
 
 const recuperarLocalStorage = () => {
-    contactos = JSON.parse(localStorage.getItem('contactos'));
+    contactos = JSON.parse(localStorage.getItem('contactos') || '[]');
     mostrarContactos();
 };
 //! CREATE
