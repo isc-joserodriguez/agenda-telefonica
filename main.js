@@ -34,25 +34,30 @@ const mostrarContactos = () => {
         </tr>
         `
     } */
-    if (contactos.length === 0) {
-        return;
-    }
-    cuerpoTabla.innerHTML = contactos.reduce((acc, contacto, index) => {
-        return acc + `
-        <tr>
-            <th scope="row">${index + 1}</th>
-            <td>${contacto.nombre}</td>
-            <td>${contacto.telefono}</td>
-            <td>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactoModal" onclick="mostrarContacto(${index})">
-                    Ver
-                </button>
-            <button class="btn btn-warning" onclick="editarContacto(${index})">Editar</button>
-            <button class="btn btn-danger" onclick="eliminarContacto(${index})">Eliminar</button></td>
-        </tr>
+    guardarLocalStorage(contactos);
+    if (contactos.length !== 0) {
+        cuerpoTabla.innerHTML = contactos.reduce((acc, contacto, index) => {
+            return acc + `
+            <tr>
+                <th scope="row">${index + 1}</th>
+                <td>${contacto.nombre}</td>
+                <td>${contacto.telefono}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactoModal" onclick="mostrarContacto(${index})">
+                        Ver
+                    </button>
+                <button class="btn btn-warning" onclick="editarContacto(${index})">Editar</button>
+                <button class="btn btn-danger" onclick="eliminarContacto(${index})">Eliminar</button></td>
+            </tr>
+            `
+        }, '');
+    } else {
+        cuerpoTabla.innerHTML = `
+        <th colspan="5">
+            <h1>¡No existe ningún contacto!</h1>
+        </th>
         `
-    }, '');
-    guardarLocalStorage(contactos)
+    }
 };
 const mostrarContacto = (indice) => {
     const { telefono, nombre } = contactos[indice];
@@ -82,8 +87,6 @@ const eliminarContacto = (indice) => {
         alert('Se eliminó correctamente.')
     }
 };
-
-
 
 formularioContacto.addEventListener('submit', (event) => {
     event.preventDefault();
